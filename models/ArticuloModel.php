@@ -108,7 +108,7 @@ class ArticuloModel{
     public function getAll()
     {
         //realizamos una consulta de todos los articulos
-        $consulta=$this->db->prepare("SELECT * FROM ARTICULO");
+        $consulta=$this->db->prepare("SELECT * FROM articulo");
         $consulta->execute();
         $resultado=$consulta->fetchAll(PDO::FETCH_CLASS,"ArticuloModel");
         
@@ -119,7 +119,7 @@ class ArticuloModel{
     public function getById($art_id)
     {
         //devolvemos una consulta preparada por el id de la tabla()
-        $gsent = $this->db->prepare('SELECT * FROM ARTICULO where ART_ID = ?');
+        $gsent = $this->db->prepare('SELECT * FROM articulo where ART_ID = ?');
         $gsent->bindParam(1, $art_id);
         $gsent->execute();
 
@@ -135,13 +135,13 @@ class ArticuloModel{
     public function save()
     {
         if (!isset($this->ART_ID)) {            
-            $consulta = $this->db->prepare('INSERT INTO ARTICULO ( ART_NOMBRE,ART_CATEGORIA,ART_CANTIDAD ) values ( ?,?,? )');
+            $consulta = $this->db->prepare('INSERT INTO articulo ( ART_NOMBRE,ART_CATEGORIA,ART_CANTIDAD ) values ( ?,?,? )');
             $consulta->bindParam(1, $this->ART_NOMBRE);
             $consulta->bindParam(2,$this->ART_CATEGORIA);
             $consulta->bindParam(3,$this->ART_CANTIDAD);
             $consulta->execute();
         } else {
-            $consulta = $this->db->prepare('UPDATE ARTICULO SET ART_NOMBRE = ?,ART_CATEGORIA=?,ART_CANTIDAD=? WHERE ART_ID =  ? ');
+            $consulta = $this->db->prepare('UPDATE articulo SET ART_NOMBRE = ?,ART_CATEGORIA=?,ART_CANTIDAD=? WHERE ART_ID =  ? ');
             $consulta->bindParam(1, $this->ART_NOMBRE);
             $consulta->bindParam(2, $this->ART_CATEGORIA);
             $consulta->bindParam(3, $this->ART_CANTIDAD);
@@ -153,7 +153,7 @@ class ArticuloModel{
     // Método que elimina el ArticuloModel de la BD
     public function delete()
     {
-        $consulta = $this->db->prepare('DELETE FROM  ARTICULO WHERE ART_ID =  ?');
+        $consulta = $this->db->prepare('DELETE FROM  articulo WHERE ART_ID =  ?');
         $consulta->bindParam(1, $this->ART_ID);
         $consulta->execute();
     }

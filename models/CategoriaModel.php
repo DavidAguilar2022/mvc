@@ -64,7 +64,7 @@
         public function getAll()
         {
             //realizamos una consulta de todos las categorias
-            $consulta=$this->db->prepare("SELECT * FROM CATEGORIA");
+            $consulta=$this->db->prepare("SELECT * FROM categoria");
             $consulta->execute();
             $resultado=$consulta->fetchAll(PDO::FETCH_CLASS,"CategoriaModel");
             
@@ -76,7 +76,7 @@
         public function getById($cat_id)
         {
             //devolvemos una consulta preparada por el id de la tabla()
-            $gsent = $this->db->prepare('SELECT * FROM CATEGORIA where CAT_ID = ?');
+            $gsent = $this->db->prepare('SELECT * FROM categoria where CAT_ID = ?');
             $gsent->bindParam(1, $cat_id);
             $gsent->execute();
 
@@ -91,12 +91,12 @@
         public function save()
         {
             if (!isset($this->CAT_ID)) {
-                $consulta = $this->db->prepare('INSERT INTO CATEGORIA (CAT_NOMBRE ) VALUES (?)');
+                $consulta = $this->db->prepare('INSERT INTO categoria (CAT_NOMBRE ) VALUES (?)');
                 $consulta->bindParam(1, $this->CAT_NOMBRE);
                 
                 $consulta->execute();
             } else {
-                $consulta = $this->db->prepare('UPDATE CATEGORIA SET CAT_NOMBRE = ? WHERE CAT_ID = ?');
+                $consulta = $this->db->prepare('UPDATE categoria SET CAT_NOMBRE = ? WHERE CAT_ID = ?');
                 $consulta->bindParam(1, $this->CAT_NOMBRE);                
                 $consulta->bindParam(2, $this->CAT_ID);
                 $consulta->execute();
@@ -109,7 +109,7 @@
             //dejamos que se borre la categoría si no hay un elemento asociado
             if($this->articulosAsociados()==0)
             {
-                $consulta = $this->db->prepare('DELETE FROM  CATEGORIA WHERE CAT_ID =  ?');
+                $consulta = $this->db->prepare('DELETE FROM  categoria WHERE CAT_ID =  ?');
                 $consulta->bindParam(1, $this->CAT_ID);
                 $consulta->execute();
                 
@@ -120,7 +120,7 @@
         private function articulosAsociados()
         {
             //vemos la cantidad de articulos que hay asociados a esa categoria
-            $consulta=$this->db->prepare('SELECT * FROM ARTICULO WHERE ART_CATEGORIA=?');
+            $consulta=$this->db->prepare('SELECT * FROM ARTICULO WHERE ART_categoria=?');
             $consulta->bindParam(1, $this->CAT_ID);
             $consulta->execute();
             $cantidad=$consulta->rowCount();
